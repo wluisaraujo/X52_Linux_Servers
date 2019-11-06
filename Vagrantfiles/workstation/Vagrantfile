@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby  :
+
+####    WORKSTATION
+####    workstatinon.domain.com.br
+
+# Verificando e instalando as dependências de plugins do Vagrant
+required_plugins = %w( vagrant-disksize vagrant-vbguest )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+  raise "The plugin #{plugin} is required. Please run `vagrant plugin install #{plugin}`"  unless Vagrant.has_plugin? plugin
+end
+
+#------------------------------------------------#
+# Declaração de variáveis
+#------------------------------------------------#
+Vagrant.require_version ">= 2.0.0"
+VAGRANTFILE_API_VERSION = "2"
+TIMEOUT = 600
+BOXNAME     = "ubuntu/bionic64"
+NET_ADDRESS = "200.100.50"
+DISKSIZE = "20GB"
+DIR_SOURCE = "../../files/"
+DIR_DESTINY = "/templates/"
+ENV["LC_ALL"] = "en_US.UTF-8"
+#------------------------------------------------#
+
+
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  #---------------------------------------
+  # Criando a VM workstatinon
+  config.vm.define :workstatinon, primary: true do |workstatinon_config|
+    workstatinon_config.vm.provider "virtualbox" do |vb|
+        vb.memory = '1024'
+        vb.cpus   = '1'
+        vb.name   = 'workstatinon.exemplo.com.br'
+        vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+        vb.customize [ "modifyvm", :id, "--hostonlyadapter1", "vboxnet0"]
+        vb.customize [ "modifyvm", :id, "--groups", "/x52-Linux-Servers"]
+    end
+    workstatinon_config.vm.hostname         = 'workstatinon.exemplo.com.br'
+    workstatinon_config.vm.box              = BOXNAME
+    workstatinon_config.vm.boot_timeout     = TIMEOUT
+    workstatinon_config.vm.box_check_update = true
+    workstatinon_config.vm.synced_folder DIR_SOURCE, DIR_DESTINY
+    workstatinon_config.vm.network "private_network", ip: "#{NET_ADDRESS}.10"
+    end
+  end
+
+  
