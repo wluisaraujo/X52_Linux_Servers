@@ -6,14 +6,14 @@ export CURSO=752
 
 if [[ -z ${CURSO} ]]
    then
-	echo "Variavel do curso não definida " 
+	echo "Variavel do curso não definida "
    else
 	echo "Preparando ambiente do curso $CURSO"
 	export BASEDIR=/home/repositorio/FREQUENTES/${CURSO} && cd ${BASEDIR}
 	ls -ld $BASEDIR > /dev/null 2>&1
 # 	import appliance
 	if [ $? == 0 ]
-	  then 
+	  then
 	    for OVA in $(ls -1 ${BASEDIR}/*${CURSO}*.ova)
 	      do
 		echo " Importando appliance ${OVA}"
@@ -31,7 +31,7 @@ if [[ -z ${CURSO} ]]
 		vboxmanage dhcpserver modify --ifname vboxnet1 --enable --ip 172.16.100.254 --netmask 255.255.255.0 --lowerip 172.16.100.240 --upperip 172.16.100.253
 
 	      for VM in $(vboxmanage list vms | awk '{ print $1}' | sed s/\"//g )
-		do 
+		do
 		  vboxmanage modifyvm ${VM} --memory 512
 		  vboxmanage modifyvm ${VM} --pae on
 		  vboxmanage modifyvm ${VM} --cpus 2
@@ -49,5 +49,9 @@ if [[ -z ${CURSO} ]]
 		  do
 		    vboxmanage modifyvm ${GUEST} --nic1 hostonly --hostonlyadapter1 vboxnet1
                   done
-	fi	
+##          for DISK in $(seq 5)
+##            do
+##        vboxmanage createmedium disk --filename ~"Virtual Box"/StorageDISK${DISK}.vdi --size 5120
+##            done
+	fi
 fi
