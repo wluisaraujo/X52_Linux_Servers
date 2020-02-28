@@ -50,9 +50,5 @@ if [ -d /home/repositorio/FREQUENTES/${CURSO} ]
 		    do
 		      vboxmanage modifyvm ${GUEST} --nic1 hostonly --hostonlyadapter1 vboxnet1
         done
-##          for DISK in $(seq 5)
-##            do
-##        vboxmanage createmedium disk --filename ~"Virtual Box"/StorageDISK${DISK}.vdi --size 5120
-##            done
 	fi
 fi

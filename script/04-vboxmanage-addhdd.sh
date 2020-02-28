@@ -4,7 +4,6 @@ cd $HOME && mkdir -pv "$HOME/VirtualBox VMs/752/Storage"
 
 if [ -d "$HOME/VirtualBox VMs/752/Storage" ]
   then
-#printf "Diretorio existe\n"
     for D in $(seq 10 15)
       do
         cd "$HOME/VirtualBox VMs/752/Storage"
