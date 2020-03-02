@@ -1,0 +1,34 @@
+---
+version: '3'
+services:
+  squid:
+    image: centos:latest
+
+    container_name: squid
+    hostname: squid
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files:/opt/files
+    ports:
+      - "3128:3128"
+
+    environment:
+      LANGUAGE: en_US:en
+      LC_ALL: en_US.UTF-8
+      LC_MESSAGES: en_US.UTF-8
+      LANG: C.UTF-8
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+...

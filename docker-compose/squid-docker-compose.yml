@@ -1,0 +1,60 @@
+---
+version: '3'
+services:
+  squid:
+    image: centos:latest
+
+    container_name: dexter-squid
+    hostname: squid
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files:/opt/files
+    ports:
+      - "3128:3128"
+
+    environment:
+      TERM: xterm
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+
+  sarg:
+    image: centos:latest
+    depends_on:
+      - squid
+    container_name: dexter-sarg
+    hostname: sarg
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files:/opt/files
+    ports:
+      - "8080:8080"
+
+    environment:
+      TERM: xterm
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+...

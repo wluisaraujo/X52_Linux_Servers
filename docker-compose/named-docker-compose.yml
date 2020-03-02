@@ -1,0 +1,81 @@
+---
+version: '3'
+services:
+  named-primary:
+    image: centos:latest
+
+    container_name: dexter-named
+    hostname: ns1
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files:/opt/files
+#    ports:
+#      - "53:53"
+#      - "953:953"
+#    expose:
+#      - "53"
+
+    environment:
+      TERM: xterm
+
+    extra_hosts:
+      - "balancer.dexter.com.br:172.16.238.1"
+      - "intranet.dexter.com.br:172.16.238.2"
+      - "ldap.dexter.com.br:172.16.238.3"
+      - "ns1.dexter.com.br:172.16.238.4"
+      - "proxy.dexter.com.br:172.16.238.5"
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+
+  named-secondary:
+    image: centos:latest
+    depends_on:
+      - named-primary
+#    links:
+#      - named-primary
+
+    container_name: dexter-named
+    hostname: ns1
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files:/opt/files
+#    ports:
+#      - "1053:53"
+#      - "10953:953"
+
+    environment:
+      TERM: xterm
+
+    extra_hosts:
+      - "balancer.dexter.com.br:172.16.238.1"
+      - "intranet.dexter.com.br:172.16.238.2"
+      - "ldap.dexter.com.br:172.16.238.3"
+      - "ns1.dexter.com.br:172.16.238.4"
+      - "proxy.dexter.com.br:172.16.238.5"
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+...

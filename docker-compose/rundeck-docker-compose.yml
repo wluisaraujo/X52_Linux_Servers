@@ -1,0 +1,35 @@
+---
+version: '3'
+services:
+  rundeck:
+    build:
+      context: ./
+      dockerfile: CentOS.Dockerfile
+
+    tty: true
+    privileged: true
+    restart: always
+    entrypoint: /sbin/init
+
+    container_name: rundeck
+    hostname: rundeck.exemplo.com.br
+    domainname: exemplo.com.br
+    dns_search: exemplo.com.br
+
+    ports:
+      - "4440:4440"
+#    volumes:
+#      - ../files/etc:/etc/rundeck
+    environment:
+      HOSTNAME: rundeck.exemplo.com.br
+      RUNDECK_GRAILS_URL: http://127.0.0.1:4440
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+...

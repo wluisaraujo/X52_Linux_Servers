@@ -1,0 +1,41 @@
+---
+version: '3'
+services:
+  mariadb:
+    image: centos:latest
+
+    container_name: dexter-mariadb
+    hostname: sgdb
+
+    privileged: true
+    tty: true
+    restart: always
+    entrypoint: /sbin/init
+
+    volumes:
+      - ../files/:/opt/files
+    ports:
+      - "3306:3306"
+
+    environment:
+      TERM: xterm
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: roundcube
+
+    extra_hosts:
+      - "balancer.dexter.com.br:172.16.238.1"
+      - "intranet.dexter.com.br:172.16.238.2"
+      - "ldap.dexter.com.br:172.16.238.3"
+      - "ns1.dexter.com.br:172.16.238.4"
+      - "proxy.dexter.com.br:172.16.238.5"
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+...
