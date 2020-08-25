@@ -7,7 +7,7 @@
 Descrição
 ------------
 
-	Praticas do ambiente do curso [x52 Linux Servers – Configuration & DevOps](https://www.4linux.com.br/curso/linux-servers-configuration-devops)
+Praticas do ambiente do curso [x52 Linux Servers – Configuration & DevOps](https://www.4linux.com.br/curso/linux-servers-configuration-devops)
 
 
 
@@ -15,7 +15,7 @@ Requisitos
 ------------
 
 	Será utilizado Máquinas Virtuais para permitir ao aluno realizar o crso em qualquer computador ou sistema operacional e compatibilidade com VirtualBox.
-Você precisará baixar os Appliances e importá-lo no VirtualBox.
+	Você precisará baixar os Appliances e importá-lo no VirtualBox.
 
 * [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads) versão 6 ou mais atual
 
@@ -29,9 +29,9 @@ Você precisará baixar os Appliances e importá-lo no VirtualBox.
 
 * [Vagrant Plugins vagrant-disksize & vagrant-vbguest](https://www.vagrantup.com/docs/plugins/usage.html)
 
-* [Ansible](https://localhost/)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
-* [Docker](https://localhost/)
+* [Docker](https://docs.docker.com/engine/install/)
 
 
 Ambiente
